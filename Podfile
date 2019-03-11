@@ -7,5 +7,5 @@ target 'shareYouTubeTest' do
 
   # Pods for shareYouTubeTest
 pod 'GoogleAPIClientForREST/YouTube', '~> 1.2.1'
-pod 'Google/SignIn'
+pod 'GoogleSignIn'
 end

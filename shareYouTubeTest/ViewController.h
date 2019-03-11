@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Google/SignIn.h>
 #import <GTLRYouTube.h>
 
+@import GoogleSignIn;
 @interface ViewController : UIViewController <GIDSignInDelegate, GIDSignInUIDelegate>
 
 @property (weak, nonatomic) IBOutlet GIDSignInButton *signInButton;

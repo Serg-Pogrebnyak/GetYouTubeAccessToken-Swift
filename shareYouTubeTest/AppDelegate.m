@@ -5,7 +5,6 @@
 //  Created by Sergey Pogrebnyak on 2/21/19.
 //  Copyright © 2019 Sergey Pogrebnyak. All rights reserved.
 //
-#import <Google/SignIn.h>
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
@@ -16,20 +15,18 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSError* configureError;
-    [[GGLContext sharedInstance] configureWithError: &configureError];
-    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
+    [GIDSignIn sharedInstance].clientID = @"156385043950-2agfove4hduepq6jhheqi9jovro0cmih.apps.googleusercontent.com";
+    [GIDSignIn sharedInstance].delegate = self;
 
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)application
+- (BOOL)application:(UIApplication *)app
             openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
+            options:(NSDictionary<NSString *, id> *)options {
     return [[GIDSignIn sharedInstance] handleURL:url
-                               sourceApplication:sourceApplication
-                                      annotation:annotation];
+                               sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                      annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
 }
 
 
