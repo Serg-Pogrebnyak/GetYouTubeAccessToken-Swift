@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet GIDSignInButton *signInButton;
 @property (nonatomic, strong) UITextView *output;
 @property (nonatomic, strong) GTLRYouTubeService *service;
+@property (weak, nonatomic) IBOutlet UIButton *butonShareOnFB;
+@property (weak, nonatomic) IBOutlet UIButton *signInMyButton;
 
 @end
 

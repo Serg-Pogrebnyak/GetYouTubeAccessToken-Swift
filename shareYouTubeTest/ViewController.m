@@ -24,84 +24,47 @@
     signIn.scopes = [NSArray arrayWithObjects:kGTLRAuthScopeYouTube, nil];
     [signIn signInSilently];
 
-    // Add the sign-in button.
-    self.signInButton = [[GIDSignInButton alloc] init];
-    [self.view addSubview:self.signInButton];
-
-    // Create a UITextView to display output.
-    self.output = [[UITextView alloc] initWithFrame:self.view.bounds];
-    self.output.editable = false;
-    self.output.contentInset = UIEdgeInsetsMake(20.0, 0.0, 20.0, 0.0);
-    self.output.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    self.output.hidden = true;
-    [self.view addSubview:self.output];
-
     // Initialize the service object.
     self.service = [[GTLRYouTubeService alloc] init];
 }
 
 - (void)signIn:(GIDSignIn *)signIn
-didSignInForUser:(GIDGoogleUser *)user
-     withError:(NSError *)error {
+        didSignInForUser:(GIDGoogleUser *)user
+        withError:(NSError *)error {
+    NSLog(@"current user is - %@", [[GIDSignIn sharedInstance] currentUser]); // get current user
     if (error != nil) {
         [self showAlert:@"Authentication Error" message:error.localizedDescription];
         self.service.authorizer = nil;
+        NSLog(@"user is not authorization");
+        [self.signInMyButton setHidden: false];
+        
     } else {
-        self.signInButton.hidden = true;
-        self.output.hidden = false;
-        self.service.authorizer = user.authentication.fetcherAuthorizer;
-        [self fetchChannelResource];
+        NSLog(@"user is authorization");
+        [self.signInMyButton setHidden: true];
+        
         [[user authentication] getTokensWithHandler:^(GIDAuthentication *authentication, NSError *error) {
-            NSLog(@"token - %@", authentication.accessToken);
+            self.signInButton.hidden = true;
+            NSLog(@"token - %@", authentication.accessToken);//get access token for api call
+            NSLog(@"user email - %@", user.profile.email);//get user email
+            NSLog(@"user granted scope - %@", user.grantedScopes);//get scope
 
         }];
-
     }
 }
 
-
-
-
-
-// Construct a query and retrieve the channel resource for the GoogleDevelopers
-// YouTube channel. Display the channel title, description, and view count.
-- (void)fetchChannelResource {
-    GTLRYouTubeQuery_ChannelsList *query =
-    [GTLRYouTubeQuery_ChannelsList queryWithPart:@"snippet,statistics"];
-    query.identifier = @"UC_x5XG1OV2P6uZZ5FSM9Ttw";
-    // To retrieve data for the current user's channel, comment out the previous
-    // line (query.identifier ...) and uncomment the next line (query.mine ...).
-    // query.mine = true;
-
-    [self.service executeQuery:query
-                      delegate:self
-             didFinishSelector:@selector(displayResultWithTicket:finishedWithObject:error:)];
+-(void) signIn:(GIDSignIn *)signIn didDisconnectWithUser:(GIDGoogleUser *)user withError:(NSError *)error
+{
+    NSLog(@"user log out");
+    [self.signInMyButton setHidden: false];
 }
 
-// Process the response and display output
-- (void)displayResultWithTicket:(GTLRServiceTicket *)ticket
-             finishedWithObject:(GTLRYouTube_ChannelListResponse *)channels
-                          error:(NSError *)error {
-    if (error == nil) {
-        NSMutableString *output = [[NSMutableString alloc] init];
-        if (channels.items.count > 0) {
-            [output appendString:@"Channel information:\n"];
-            for (GTLRYouTube_Channel *channel in channels) {
-                NSString *title = channel.snippet.title;
-                NSString *description = channel.snippet.description;
-                NSNumber *viewCount = channel.statistics.viewCount;
-                [output appendFormat:@"Title: %@\nDescription: %@\nViewCount: %@\n", title, description, viewCount];
-            }
-        } else {
-            [output appendString:@"Channel not found."];
-        }
-        self.output.text = output;
-    } else {
-        [self showAlert:@"Error" message:error.localizedDescription];
-    }
+- (IBAction)signOut:(UIButton *)sender {
+    [[GIDSignIn sharedInstance] disconnect];//sign out
 }
-
-
+- (IBAction)signInAction:(id)sender
+{
+    [[GIDSignIn sharedInstance] signIn];//sign in action
+}
 
 // Helper for showing an alert
 - (void)showAlert:(NSString *)title message:(NSString *)message {

@@ -18,24 +18,50 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VWX-Dc-9u4" customClass="GIDSignInButton">
-                                <rect key="frame" x="22" y="110" width="240" height="128"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VWX-Dc-9u4" customClass="GIDSignInButton">
+                                <rect key="frame" x="67.5" y="301" width="240" height="65"/>
                                 <color key="backgroundColor" red="0.3813476562" green="0.97235785590000001" blue="0.37513563370000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="34p-bS-9dX"/>
-                                    <constraint firstAttribute="height" constant="128" id="qHP-te-bSW"/>
+                                    <constraint firstAttribute="width" constant="240" id="dP2-OX-ALa"/>
+                                    <constraint firstAttribute="height" constant="65" id="u0g-Wd-d06"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="18I-aR-hIb">
+                                <rect key="frame" x="160" y="487" width="55" height="30"/>
+                                <state key="normal" title="sign out"/>
+                                <connections>
+                                    <action selector="signOut:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hiY-xZ-2HD"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kuq-p4-bVH">
+                                <rect key="frame" x="164.5" y="318.5" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bPw-L4-oYO">
+                                <rect key="frame" x="164" y="211" width="47" height="30"/>
+                                <state key="normal" title="Sign in"/>
+                                <connections>
+                                    <action selector="signInAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eh5-L4-WV5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="VWX-Dc-9u4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="90" id="k9f-wg-iE2"/>
-                            <constraint firstItem="VWX-Dc-9u4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="22" id="rOK-Fi-2am"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="18I-aR-hIb" secondAttribute="bottom" constant="150" id="Glc-hj-d6y"/>
+                            <constraint firstItem="Kuq-p4-bVH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="H2J-rt-h7w"/>
+                            <constraint firstItem="bPw-L4-oYO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Hdk-oZ-12Z"/>
+                            <constraint firstItem="VWX-Dc-9u4" firstAttribute="top" secondItem="bPw-L4-oYO" secondAttribute="bottom" constant="60" id="J0m-Ns-VbT"/>
+                            <constraint firstItem="Kuq-p4-bVH" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="SJX-LV-E3p"/>
+                            <constraint firstItem="18I-aR-hIb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="eKM-6b-SYN"/>
+                            <constraint firstItem="VWX-Dc-9u4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pbY-2p-uVT"/>
+                            <constraint firstItem="VWX-Dc-9u4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="q6y-la-qD8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="butonShareOnFB" destination="Kuq-p4-bVH" id="AeD-hy-vbU"/>
                         <outlet property="signInButton" destination="VWX-Dc-9u4" id="dlH-We-x9u"/>
+                        <outlet property="signInMyButton" destination="bPw-L4-oYO" id="z4Y-Bo-K73"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
